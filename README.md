@@ -32,6 +32,7 @@ end
 ---
 config:
   theme: 'dark'
+  backgroud :rgb(202, 103, 103)
 ---
 graph LR
 subgraph scooter
