@@ -13,6 +13,7 @@
 #include <BLEAdvertisedDevice.h>
 
 // ---------------- Configuration ----------------
+#define DEBUG_TRAFFIC 1
 #define TARGET_MAC  "AA:BB:CC:DD:EE:FF"
 #define UNLOCK_RSSI -60
 #define LOCK_RSSI   -80
