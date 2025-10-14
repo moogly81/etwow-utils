@@ -79,6 +79,9 @@ void setup() {
 }
 
 void loop() {
+    // CRITICAL: Handle UART passthrough first (this is the main function!)
+    handleUARTPassthrough();
+    
     // Simple proximity logic with hysteresis
     if (lastRSSI > UNLOCK_RSSI && !isUnlocked) {
         sendCommand("UNLOCK");
@@ -103,5 +106,19 @@ void loop() {
         pBLEScan->start(0, nullptr, false);
     }
     
-    delay(10);
+    delay(1);  // Minimal delay for responsiveness
+}
+
+// CRITICAL FUNCTION: Handle UART passthrough
+void handleUARTPassthrough() {
+    // Forward data from display to BT module
+    while (BusSerial.available()) {
+        uint8_t data = BusSerial.read();
+        
+        // Forward to USB serial for debugging (optional)
+        Serial.write(data);
+        
+        // Note: Data automatically goes to the other UART end
+        // because ESP32 UART1 is configured as a passthrough
+    }
 }
