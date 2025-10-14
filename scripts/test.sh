@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Etwow GT Auto-lock System Test Script
-# This script runs various tests to validate the system
+# Etwow GT Auto-lock System Test Script 
+# This script runs tests for the simple sketches only
 
 set -e  # Exit on any error
 
@@ -75,17 +75,12 @@ run_test() {
 run_test "Project Structure" "scripts/validate.sh"
 
 # Test 2: Code compilation (controller)
-run_test "Controller Compilation" "arduino-cli compile --fqbn esp32:esp32:esp32s3 firmware/controller/"
+run_test "Controller Compilation" "arduino-cli compile --fqbn esp32:esp32:esp32s3 firmware/etwow.ino"
 
 # Test 3: Code compilation (badge)
-run_test "Badge Compilation" "arduino-cli compile --fqbn adafruit:adafruit:nrf52840 firmware/badge/"
+run_test "Badge Compilation" "arduino-cli compile --fqbn adafruit:adafruit:nrf52840 firmware/badge.ino"
 
-# Test 4: Example compilation
-run_test "UART Monitor Example" "arduino-cli compile --fqbn esp32:esp32:esp32s3 firmware/examples/01_uart_monitor/"
-run_test "UART Passthrough Example" "arduino-cli compile --fqbn esp32:esp32:esp32s3 firmware/examples/02_uart_passthrough/"
-run_test "BLE Scanner Example" "arduino-cli compile --fqbn esp32:esp32:esp32s3 firmware/examples/03_ble_scanner/"
-
-# Test 5: Documentation validation
+# Test 4: Documentation validation
 run_test "Documentation Check" "
     test -f docs/README.md && \
     test -f docs/bom.md && \
@@ -93,36 +88,28 @@ run_test "Documentation Check" "
     test -f README.md
 "
 
-# Test 6: Configuration file validation
-run_test "Configuration Files" "
-    test -f firmware/controller/include/config.h && \
-    test -f firmware/controller/include/pins.h && \
-    grep -q 'TARGET_BADGE_MAC' firmware/controller/include/config.h
-"
-
-# Test 7: Script permissions
+# Test 5: Script permissions
 run_test "Script Permissions" "
     test -x scripts/setup.sh && \
     test -x scripts/build.sh && \
     test -x scripts/test.sh
 "
 
-# Test 8: Library dependencies check
+# Test 6: Library dependencies check
 run_test "Library Dependencies" "
     arduino-cli lib list | grep -q 'ESP32 BLE Arduino' && \
     arduino-cli lib list | grep -q 'Adafruit Bluefruit nRF52 Libraries'
 "
 
-# Test 9: Board support check
+# Test 7: Board support check
 run_test "Board Support" "
     arduino-cli core list | grep -q 'esp32:esp32' && \
     arduino-cli core list | grep -q 'adafruit:adafruit'
 "
 
-# Test 10: Code quality checks
+# Test 8: Code quality checks (sketches only)
 run_test "Code Quality" "
-    find firmware/ -name '*.ino' -o -name '*.cpp' -o -name '*.h' | \
-    xargs grep -l 'TODO\\|FIXME\\|XXX' | wc -l | grep -q '^0$'
+    grep -l 'TODO\\|FIXME\\|XXX' firmware/*.ino | wc -l | grep -q '^0$'
 "
 
 # Generate test report

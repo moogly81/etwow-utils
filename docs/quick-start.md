@@ -29,7 +29,7 @@ https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 ### 2. Flash the BLE Badge
 
 ```bash
-# 1. Open firmware/badge/ble_badge_nrf52.ino
+# 1. Open firmware/badge.ino
 # 2. Select Board: "Adafruit Bluefruit nRF52 Feather"
 # 3. Select Port: Your nRF52 device
 # 4. Upload the code
@@ -39,10 +39,10 @@ https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 ### 3. Configure ESP32 Controller
 
 ```bash
-# 1. Open firmware/controller/uart_mim_esp32.ino
-# 2. Update targetAddress in code with your badge MAC
+# 1. Open firmware/etwow.ino
+# 2. Update TARGET_MAC in code with your badge MAC
 # 3. Select Board: "ESP32S3 Dev Module"
-# 4. Configure pins in include/pins.h for your setup
+# 4. Adjust pin defines at the top of the file if needed
 # 5. Upload the code
 ```
 

@@ -1,9 +1,7 @@
 /**
- * @file badge_simple.ino
- * @brief Ultra-simple BLE badge using standard Arduino libraries
+ * @file badge.ino
+ * @brief BLE badge using standard Arduino libraries
  * 
- * This is a much simpler version of the badge firmware that uses
- * standard Arduino BLE libraries instead of complex custom code.
  */
 
 #include <Arduino.h>
@@ -17,7 +15,7 @@ void setup() {
     Serial.begin(115200);
     while (!Serial) delay(10);
     
-    Serial.println("=== Simple Etwow Badge ===");
+    Serial.println("=== Etwow Badge ===");
     
     // Initialize Bluefruit
     Bluefruit.begin();

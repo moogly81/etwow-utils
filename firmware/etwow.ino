@@ -1,9 +1,7 @@
 /**
- * @file etwow_simple.ino
- * @brief Ultra-simple Etwow GT Auto-lock using standard Arduino BLE libraries
- * 
- * This is a much simpler version that uses standard Arduino BLE libraries
- * instead of the complex custom classes. Perfect for beginners!
+ * @file etwow.ino
+ * @brief Etwow GT Auto-lock using standard Arduino BLE libraries
+ *
  */
 
 #include <Arduino.h>

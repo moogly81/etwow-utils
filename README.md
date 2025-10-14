@@ -32,7 +32,6 @@ end
 ---
 config:
   theme: 'dark'
-  backgroud :rgb(202, 103, 103)
 ---
 graph LR
 subgraph scooter
@@ -60,14 +59,14 @@ This project implements an **inline auto-lock system** that:
 
 The system consists of two main components:
 
-### 1. ESP32 Controller (`firmware/controller/`)
+### 1. ESP32 Controller (`firmware/etwow.ino`)
 - Acts as a **BLE central** device, scanning for your badge
 - Intercepts UART communication between the scooter's display and Bluetooth module
 - Sends `LOCK`/`UNLOCK` commands based on proximity detection
 - Uses RSSI (signal strength) to determine distance with hysteresis to prevent rapid toggling
 - Modular architecture with separate managers for BLE, UART, and proximity logic
 
-### 2. BLE Badge (`firmware/badge/`)
+### 2. BLE Badge (`firmware/badge.ino`)
 - Small nRF52-based device that continuously advertises its presence
 - Battery-powered (CR2032) with 1+ year autonomy
 - Carried by the user (keychain, pocket, etc.)
@@ -106,9 +105,9 @@ nano firmware/controller/include/config.h
 # Update TARGET_BADGE_MAC with your badge's MAC address
 ```
 
-### 3. Build and Flash Firmware
+### 3. Build and Flash Firmware (simple)
 ```bash
-# Build both controller and badge
+# Build both controller and badge (simple)
 ./scripts/build.sh
 
 # Or build individually
@@ -159,9 +158,7 @@ The project includes comprehensive testing tools:
 ```
 
 ### Development Examples
-1. **`01_uart_monitor`** - Monitor UART traffic between display and BT module
-2. **`02_uart_passthrough`** - Test UART command injection
-3. **`03_ble_scanner`** - BLE scanning and RSSI measurement
+Examples have been removed for the simple layout. Use the simple sketches directly.
 
 ### Manual Testing
 - Use examples to test individual components
@@ -221,7 +218,6 @@ The project includes comprehensive testing tools:
 - Run setup script to install dependencies
 - Check Arduino CLI installation
 - Verify board support packages are installed
-- Run validation script to check project structure
 
 ## 📄 License
 
@@ -238,16 +234,9 @@ Contributions welcome! Please:
 
 ## 📚 Documentation
 
-Comprehensive documentation is available in the `docs/` directory:
+Key docs in `docs/`:
 - [Quick Start Guide](docs/quick-start.md)
-- **[Interactive Hardware Diagrams](docs/hardware-schema.drawio)** - Draw.io files (recommended)
-- [Hardware Connection Diagrams](docs/hardware-schema.md) - Mermaid diagrams
-- [Simple Connection Overview](docs/simple-connections.md)
 - [Bill of Materials](docs/bom.md)
-- [Hardware Assembly](docs/installation/hardware-assembly.md)
-- [Configuration Guide](docs/configuration/parameters.md)
-- [Troubleshooting](docs/troubleshooting/common-issues.md)
-- [API Reference](docs/api/README.md)
 
 ## ⚠️ Disclaimer
 

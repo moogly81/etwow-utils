@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Etwow GT Auto-lock System Validation Script
-# This script validates the project structure and configuration
+# Etwow GT Auto-lock System Validation Script (Simple Only)
+# This script validates the project structure for the simple sketches only
 
 set -e  # Exit on any error
 
@@ -59,40 +59,22 @@ check_item "Scripts directory exists" "test -d scripts"
 # Check firmware structure
 echo ""
 echo "Checking firmware structure..."
-check_item "Controller directory exists" "test -d firmware/controller"
-check_item "Badge directory exists" "test -d firmware/badge"
-check_item "Examples directory exists" "test -d firmware/examples"
+check_item "Firmware directory exists" "test -d firmware"
 
 # Check main firmware files
 echo ""
 echo "Checking main firmware files..."
-check_item "Controller main file exists" "test -f firmware/controller/uart_mim_esp32.ino"
-check_item "Badge main file exists" "test -f firmware/badge/ble_badge_nrf52.ino"
+check_item "Controller sketch exists" "test -f firmware/etwow.ino"
+check_item "Badge sketch exists" "test -f firmware/badge.ino"
 
-# Check include files
 echo ""
-echo "Checking include files..."
-check_item "Config header exists" "test -f firmware/controller/include/config.h"
-check_item "Pins header exists" "test -f firmware/controller/include/pins.h"
-check_item "BLE manager header exists" "test -f firmware/controller/include/ble_manager.h"
-check_item "UART manager header exists" "test -f firmware/controller/include/uart_manager.h"
-check_item "Proximity controller header exists" "test -f firmware/controller/include/proximity_controller.h"
-check_item "Utils header exists" "test -f firmware/controller/include/utils.h"
+echo "Skipping complex include files (not used in simple mode)"
 
-# Check source files
 echo ""
-echo "Checking source files..."
-check_item "BLE manager source exists" "test -f firmware/controller/src/ble_manager.cpp"
-check_item "UART manager source exists" "test -f firmware/controller/src/uart_manager.cpp"
-check_item "Proximity controller source exists" "test -f firmware/controller/src/proximity_controller.cpp"
-check_item "Utils source exists" "test -f firmware/controller/src/utils.cpp"
+echo "Skipping complex source files (not used in simple mode)"
 
-# Check example files
 echo ""
-echo "Checking example files..."
-check_item "UART monitor example exists" "test -f firmware/examples/01_uart_monitor/uart_monitor.ino"
-check_item "UART passthrough example exists" "test -f firmware/examples/02_uart_passthrough/uart_passthrough.ino"
-check_item "BLE scanner example exists" "test -f firmware/examples/03_ble_scanner/ble_scanner.ino"
+echo "Skipping examples (removed in simple mode)"
 
 # Check documentation files
 echo ""
@@ -101,7 +83,6 @@ check_item "Main README exists" "test -f README.md"
 check_item "Documentation README exists" "test -f docs/README.md"
 check_item "BOM exists" "test -f docs/bom.md"
 check_item "Quick start guide exists" "test -f docs/quick-start.md"
-check_item "Installation guide exists" "test -f docs/installation/README.md"
 
 # Check script files
 echo ""
@@ -119,35 +100,25 @@ check_item "Build script is executable" "test -x scripts/build.sh"
 check_item "Test script is executable" "test -x scripts/test.sh"
 check_item "Validate script is executable" "test -x scripts/validate.sh"
 
-# Check configuration content
 echo ""
-echo "Checking configuration content..."
-check_item "Config file contains target MAC" "grep -q 'TARGET_BADGE_MAC' firmware/controller/include/config.h"
-check_item "Config file contains RSSI thresholds" "grep -q 'UNLOCK_RSSI_THRESHOLD' firmware/controller/include/config.h"
-check_item "Pins file contains UART pins" "grep -q 'BUS_UART_RX_PIN' firmware/controller/include/pins.h"
-check_item "Pins file contains OE pin" "grep -q 'OE_PIN' firmware/controller/include/pins.h"
+echo "Checking sketch content..."
+check_item "Controller defines TARGET_MAC" "grep -q 'TARGET_MAC' firmware/etwow.ino"
+check_item "Controller defines thresholds" "grep -q 'UNLOCK_RSSI' firmware/etwow.ino"
 
-# Check for required dependencies in code
 echo ""
 echo "Checking code dependencies..."
-check_item "Controller includes BLE libraries" "grep -q 'BLEDevice.h' firmware/controller/uart_mim_esp32.ino"
-check_item "Badge includes Bluefruit library" "grep -q 'bluefruit.h' firmware/badge/ble_badge_nrf52.ino"
-check_item "Controller includes config" "grep -q 'config.h' firmware/controller/uart_mim_esp32.ino"
+check_item "Controller includes BLE libraries" "grep -q 'BLEDevice.h' firmware/etwow.ino"
+check_item "Badge includes Bluefruit library" "grep -q 'bluefruit.h' firmware/badge.ino"
 
-# Check file sizes (basic sanity check)
 echo ""
 echo "Checking file sizes..."
-check_item "Controller main file has content" "test -s firmware/controller/uart_mim_esp32.ino"
-check_item "Badge main file has content" "test -s firmware/badge/ble_badge_nrf52.ino"
-check_item "Config file has content" "test -s firmware/controller/include/config.h"
-check_item "Pins file has content" "test -s firmware/controller/include/pins.h"
+check_item "Controller sketch has content" "test -s firmware/etwow.ino"
+check_item "Badge sketch has content" "test -s firmware/badge.ino"
 
-# Check for common issues
 echo ""
 echo "Checking for common issues..."
-check_item "No TODO comments in main files" "! grep -q 'TODO\\|FIXME\\|XXX' firmware/controller/uart_mim_esp32.ino firmware/badge/ble_badge_nrf52.ino"
-check_item "No hardcoded MAC addresses" "! grep -q 'AA:BB:CC:DD:EE:FF' firmware/controller/uart_mim_esp32.ino"
-check_item "No syntax errors in headers" "! grep -q 'error\\|Error\\|ERROR' firmware/controller/include/*.h"
+check_item "No TODO comments in sketches" "! grep -q 'TODO\\|FIXME\\|XXX' firmware/etwow.ino firmware/badge.ino"
+check_item "No placeholder MAC address left" "! grep -q 'AA:BB:CC:DD:EE:FF' firmware/etwow.ino"
 
 # Generate validation report
 echo ""
