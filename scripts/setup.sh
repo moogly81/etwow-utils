@@ -37,7 +37,6 @@ arduino-cli lib update-index  --config-file arduino-cli.yaml
 arduino-cli core install esp32:esp32 --config-file arduino-cli.yaml
 arduino-cli core install adafruit:nrf52 --config-file arduino-cli.yaml
 
-arduino-cli lib install "ESP32 BLE Arduino" --config-file arduino-cli.yaml
 arduino-cli lib install "Adafruit BusIO" --config-file arduino-cli.yaml
 arduino-cli lib install "Adafruit nRFCrypto" --config-file arduino-cli.yaml
 

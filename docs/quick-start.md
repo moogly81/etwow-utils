@@ -98,7 +98,6 @@ Edit `include/pins.h` for your hardware:
 - [ ] Lock/unlock commands are sent when thresholds crossed
 - [ ] UART passthrough works (no interference)
 - [ ] System powers on/off cleanly
-- [ ] Enclosure is weatherproof
 
 ## 🆘 Quick Troubleshooting
 
