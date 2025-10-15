@@ -1,0 +1,40 @@
+#!/bin/bash
+# --- Arduino local environment for M5Stamp S3 ---
+
+LOCAL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TOOLS_DIR="$LOCAL_DIR/tools/arduino-cli"
+CLI_BIN="$TOOLS_DIR/arduino-cli"
+CLI_CONF="$TOOLS_DIR/arduino-cli.yaml"
+
+# --- Wrapper for local Arduino CLI ---
+arduino-cli() {
+  "$CLI_BIN" --config-file "$CLI_CONF" "$@"
+}
+
+# --- Local board & port ---
+FQBN="esp32:esp32:m5stack_stamp_s3"
+PORT="/dev/cu.usbmodem2101"
+
+# --- Shortcuts ---
+compile() {
+  arduino-cli compile --fqbn "$FQBN" 01_ble_calibration "$@"
+}
+send() {
+  arduino-cli upload -v -p "$PORT" --fqbn "$FQBN" 01_ble_calibration "$@"
+}
+monitor() {
+  arduino-cli monitor -p "$PORT" -c 115200
+}
+
+# --- Local autocompletion setup ---
+# Generate local completion file if missing
+if [ ! -f "$TOOLS_DIR/_arduino-cli" ]; then
+  "$CLI_BIN" completion zsh > "$TOOLS_DIR/_arduino-cli"
+fi
+
+# Only register completion if running in zsh
+if [ -n "$ZSH_VERSION" ]; then
+  fpath=("$TOOLS_DIR" $fpath)
+  autoload -Uz compinit && compinit
+  compdef _arduino-cli arduino-cli
+fi

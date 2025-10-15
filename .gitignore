@@ -1,1 +1,0 @@
-*.ino.bak *.ino.orig build/ *.bin *.elf *.hex .vscode/ .idea/ *.swp *.swo .DS_Store Thumb.db .env *.log *.tmp *.temp

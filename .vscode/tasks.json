@@ -1,0 +1,87 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build: Controller (ESP32-S3)",
+      "type": "shell",
+      "command": "arduino-cli compile --fqbn 'esp32:esp32:esp32s3:PartitionScheme=default,FlashMode=qio,FlashSize=8M,UploadSpeed=921600,DebugLevel=none' sketches/controller",
+      "group": "build",
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "Upload: Controller (set PORT)",
+      "type": "shell",
+      "command": "arduino-cli upload --fqbn 'esp32:esp32:esp32s3:PartitionScheme=default,FlashMode=qio,FlashSize=8M,UploadSpeed=921600,DebugLevel=none' -p ${input:serialPort} sketches/controller",
+      "dependsOn": ["Build: Controller (ESP32-S3)"],
+      "group": "build",
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "Build: Badge (nRF52840)",
+      "type": "shell",
+      "command": "arduino-cli compile --fqbn 'adafruit:nrf52:nrf52840:softdevice=s140v6,debug=l0' sketches/badge",
+      "group": "build",
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "Upload: Badge (set PORT)",
+      "type": "shell",
+      "command": "arduino-cli upload --fqbn 'adafruit:nrf52:nrf52840:softdevice=s140v6,debug=l0' -p ${input:serialPort} sketches/badge",
+      "dependsOn": ["Build: Badge (nRF52840)"],
+      "group": "build",
+      "presentation": { "reveal": "always" }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serialPort",
+      "type": "promptString",
+      "description": "Serial port (e.g. /dev/ttyUSB0 or /dev/tty.usbserial-xxxx)"
+    }
+  ]
+}
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build: Controller (ESP32-S3)",
+      "type": "shell",
+      "command": "arduino-cli",
+      "args": ["compile", "--fqbn", "esp32:esp32:esp32s3:PartitionScheme=default,FlashMode=qio,FlashSize=8M,UploadSpeed=921600,DebugLevel=none", "sketches/controller"],
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "Upload: Controller (set PORT)",
+      "type": "shell",
+      "command": "arduino-cli",
+      "args": ["upload", "--fqbn", "esp32:esp32:esp32s3:PartitionScheme=default,FlashMode=qio,FlashSize=8M,UploadSpeed=921600,DebugLevel=none", "-p", "${input:serialPort}", "sketches/controller"],
+      "problemMatcher": ["$gcc"],
+      "dependsOn": ["Build: Controller (ESP32-S3)"]
+    },
+    {
+      "label": "Build: Badge (nRF52840)",
+      "type": "shell",
+      "command": "arduino-cli",
+      "args": ["compile", "--fqbn", "adafruit:nrf52:nrf52840:softdevice=s140v6,debug=l0", "sketches/badge"],
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "Upload: Badge (set PORT)",
+      "type": "shell",
+      "command": "arduino-cli",
+      "args": ["upload", "--fqbn", "adafruit:nrf52:nrf52840:softdevice=s140v6,debug=l0", "-p", "${input:serialPort}", "sketches/badge"],
+      "problemMatcher": ["$gcc"],
+      "dependsOn": ["Build: Badge (nRF52840)"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serialPort",
+      "type": "promptString",
+      "description": "Enter serial port (e.g., /dev/tty.usbmodem12345 or /dev/tty.usbserial-xyz)",
+      "default": "/dev/tty.usbmodem-CHANGE_ME"
+    }
+  ]
+}
