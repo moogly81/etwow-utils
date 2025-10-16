@@ -1,0 +1,10 @@
+profiles:
+  LED:
+    fqbn: esp32:esp32:m5stack_stamp_s3
+    platforms:
+      - platform: esp32:esp32
+        platform_index_url: https://static-cdn.m5stack.com/resource/arduino/package_m5stack_index.json
+#    libraries:
+#      - SomeRandomLibrary (0.0.1)
+    port: /dev/cu.usbmodem2101
+default_profile: LED 

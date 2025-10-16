@@ -46,7 +46,7 @@ style B fill:blue
 style D fill:blue
 ```
 
-
+Using the ETWOW uart command codes from  https://github.com/simonrey1/etwowconnect2/tree/main. Huge thanks !
 
 
 This project implements an **inline auto-lock system** that:

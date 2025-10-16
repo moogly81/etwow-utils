@@ -38,5 +38,5 @@ void setup() {
 
 void loop() {
     ensureBLEScanActive();
-    delay(100);
+    delay(200);
 }
